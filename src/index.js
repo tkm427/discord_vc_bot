@@ -5,7 +5,7 @@ import path from "path";
 import express from "express";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 // ヘルスチェックエンドポイント
 app.get("/health", (req, res) => {
