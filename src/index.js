@@ -45,18 +45,18 @@ const client = new Client({
 /**
  * セッションデータをファイルに保存
  */
-function saveSessions() {
-  const data = [];
-  voiceSessions.forEach((session, userId) => {
-    data.push({
-      userId,
-      username: session.username,
-      joinedAt: session.joinedAt,
-    });
-  });
+// function saveSessions() {
+//   const data = [];
+//   voiceSessions.forEach((session, userId) => {
+//     data.push({
+//       userId,
+//       username: session.username,
+//       joinedAt: session.joinedAt,
+//     });
+//   });
 
-  fs.writeFileSync(SESSIONS_FILE, JSON.stringify(data, null, 2));
-}
+//   fs.writeFileSync(SESSIONS_FILE, JSON.stringify(data, null, 2));
+// }
 
 /**
  * セッション履歴をファイルに追記
@@ -125,7 +125,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
       joinedAt: joinedAt.toISOString(),
       channelId: newState.channelId,
     });
-    saveSessions();
+    // saveSessions();
 
     // 参加通知を送信
     const joinEmbed = new EmbedBuilder()
@@ -164,7 +164,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 
       // セッションを削除
       voiceSessions.delete(user.id);
-      saveSessions();
+      // saveSessions();
 
       // 退出通知を送信
       const leaveEmbed = new EmbedBuilder()
