@@ -1,0 +1,24 @@
+{
+    "name": "discord-voice-tracker",
+    "version": "1.0.0",
+    "description": "Discord bot that tracks voice channel activity and notifies in text channels",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "node --watch src/index.js"
+    },
+    "keywords": [
+        "discord",
+        "bot",
+        "voice",
+        "tracker"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "discord.js": "^14.14.1",
+        "dotenv": "^16.3.1",
+        "express": "^5.2.1"
+    }
+}
