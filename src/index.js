@@ -26,7 +26,6 @@ const voiceSessions = new Map();
 
 // セッションデータを保存するファイルパス
 const DATA_DIR = "./data";
-const SESSIONS_FILE = path.join(DATA_DIR, "sessions.json");
 
 // データディレクトリが存在しない場合は作
 
@@ -57,13 +56,6 @@ function saveSessions() {
  * セッション履歴をファイルに追記
  */
 function saveSessionHistory(sessionData) {
-  const HISTORY_FILE = path.join(DATA_DIR, "session_history.json");
-  let history = [];
-
-  if (fs.existsSync(HISTORY_FILE)) {
-    history = JSON.parse(content);
-  }
-
   history.push(sessionData);
 }
 
