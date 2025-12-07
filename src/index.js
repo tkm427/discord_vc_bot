@@ -28,10 +28,7 @@ const voiceSessions = new Map();
 const DATA_DIR = "./data";
 const SESSIONS_FILE = path.join(DATA_DIR, "sessions.json");
 
-// データディレクトリが存在しない場合は作成
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
+// データディレクトリが存在しない場合は作
 
 // Discordクライアントの初期化
 const client = new Client({
@@ -64,12 +61,10 @@ function saveSessionHistory(sessionData) {
   let history = [];
 
   if (fs.existsSync(HISTORY_FILE)) {
-    const content = fs.readFileSync(HISTORY_FILE, "utf-8");
     history = JSON.parse(content);
   }
 
   history.push(sessionData);
-  fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2));
 }
 
 /**
