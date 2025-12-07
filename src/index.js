@@ -1,6 +1,21 @@
 import { Client, GatewayIntentBits, EmbedBuilder } from "discord.js";
 import dotenv from "dotenv";
+import express from "express";
 
+const app = express();
+const PORT = process.env.PORT || 8000;
+
+// ヘルスチェックエンドポイント
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Health check server running on port ${PORT}`);
+});
 dotenv.config();
 
 // ユーザーのボイスチャンネルセッションを追跡
