@@ -1,33 +1,10 @@
 import { Client, GatewayIntentBits, EmbedBuilder } from "discord.js";
 import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
-import express from "express";
-
-const app = express();
-const PORT = process.env.PORT || 8000;
-
-// ヘルスチェックエンドポイント
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "ok",
-    timestamp: new Date().toISOString(),
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`Health check server running on port ${PORT}`);
-});
 
 dotenv.config();
 
 // ユーザーのボイスチャンネルセッションを追跡
 const voiceSessions = new Map();
-
-// セッションデータを保存するファイルパス
-const DATA_DIR = "./data";
-
-// データディレクトリが存在しない場合は作
 
 // Discordクライアントの初期化
 const client = new Client({
@@ -37,27 +14,6 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
   ],
 });
-
-/**
- * セッションデータをファイルに保存
- */
-function saveSessions() {
-  const data = [];
-  voiceSessions.forEach((session, userId) => {
-    data.push({
-      userId,
-      username: session.username,
-      joinedAt: session.joinedAt,
-    });
-  });
-}
-
-/**
- * セッション履歴をファイルに追記
- */
-function saveSessionHistory(sessionData) {
-  history.push(sessionData);
-}
 
 /**
  * 時間をフォーマット（時:分:秒）
@@ -108,9 +64,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
     voiceSessions.set(user.id, {
       username,
       joinedAt: joinedAt.toISOString(),
-      channelId: newState.channelId,
     });
-    saveSessions();
 
     // 参加通知を送信
     const joinEmbed = new EmbedBuilder()
@@ -136,20 +90,8 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
       const joinedAt = new Date(session.joinedAt);
       const duration = leftAt - joinedAt;
 
-      // セッション履歴を保存
-      const sessionData = {
-        userId: user.id,
-        username: session.username,
-        joinedAt: session.joinedAt,
-        leftAt: leftAt.toISOString(),
-        durationMs: duration,
-        durationFormatted: formatDuration(duration),
-      };
-      saveSessionHistory(sessionData);
-
       // セッションを削除
       voiceSessions.delete(user.id);
-      saveSessions();
 
       // 退出通知を送信
       const leaveEmbed = new EmbedBuilder()
